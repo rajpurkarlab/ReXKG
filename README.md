@@ -55,7 +55,7 @@ We use the entity extraction method proposed by [PURE](https://github.com/prince
 
 4. **Inference**:
    `./src/ner/data`
-   You can also download model checkpoint to ./result/
+   You can also download model checkpoint from [Google Drive](https://drive.google.com/drive/folders/1DZY7L0JUQcV2mwThOeT8tYmLvVFDy3PN?usp=sharing) to ./result/
    Convert data file in to the test format with `python get_inference_data.py`
    `./src/ner`
    Run `sh inference.sh` to perform inference on the entire dataset.
