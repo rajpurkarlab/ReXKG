@@ -73,3 +73,14 @@ We use the entity extraction method proposed by [PURE](https://github.com/prince
 
 
 ## Citation
+If you use this code for your research or project, please cite:
+
+    @article{zhang2024uncovering,
+      title={Uncovering Knowledge Gaps in Radiology Report Generation Models through Knowledge Graphs},
+      author={Zhang, Xiaoman and Zhou, Hong-Yu and N. Acosta, Juli´an and Rajpurkar, Pranav},
+      journal={arXiv},
+      year={2024},
+    }
+
+If you have any question, please feel free to contact.
+
