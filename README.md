@@ -71,6 +71,7 @@ We use the entity extraction method proposed by [PURE](https://github.com/prince
 
 1. run `sh auto_build_kg.sh` to get kg at `result`
 
+2. We give an example of obtained kg files in `./src/kg_construct/result`
 
 ## Citation
 If you use this code for your research or project, please cite:

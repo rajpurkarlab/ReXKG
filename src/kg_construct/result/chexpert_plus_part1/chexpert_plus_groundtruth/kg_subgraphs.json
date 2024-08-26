@@ -1,0 +1,58 @@
+{
+    "C0179740C0205132": {
+        "composed_entities": [
+            "picc line"
+        ],
+        "cui_list": [
+            "C0179740",
+            "C0205132"
+        ],
+        "entity_list": [
+            "picc",
+            "line"
+        ],
+        "composed_cui": "C0179740/C0205132"
+    },
+    "C0175730ng": {
+        "composed_entities": [
+            "ng tube"
+        ],
+        "cui_list": [
+            "ng",
+            "C0175730"
+        ],
+        "entity_list": [
+            "ng",
+            "tube"
+        ],
+        "composed_cui": "C0175730/ng"
+    },
+    "C0175730et": {
+        "composed_entities": [
+            "et tube"
+        ],
+        "cui_list": [
+            "et",
+            "C0175730"
+        ],
+        "entity_list": [
+            "et",
+            "tube"
+        ],
+        "composed_cui": "C0175730/et"
+    },
+    "C0205132pic": {
+        "composed_entities": [
+            "pic line"
+        ],
+        "cui_list": [
+            "pic",
+            "C0205132"
+        ],
+        "entity_list": [
+            "pic",
+            "line"
+        ],
+        "composed_cui": "C0205132/pic"
+    }
+}
