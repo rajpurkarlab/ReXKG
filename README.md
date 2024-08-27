@@ -79,7 +79,7 @@ If you use this code for your research or project, please cite:
     @article{zhang2024uncovering,
       title={Uncovering Knowledge Gaps in Radiology Report Generation Models through Knowledge Graphs},
       author={Zhang, Xiaoman and Zhou, Hong-Yu and N. Acosta, Juli´an and Rajpurkar, Pranav},
-      journal={arXiv},
+      journal={arXiv:2408.14397},
       year={2024},
     }
 
