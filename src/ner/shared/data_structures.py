@@ -42,20 +42,7 @@ class Dataset:
         if doc_range is not None:
             self.js = self.js[doc_range[0]:doc_range[1]]
         self.is_augment = is_augment
-        ne_dic = self.get_ne_dict()
-        self.augmentator =  DictionaryReplacement(ne_dic, str.split, IOBES)
-        self.documents = [Document(js,self.augmentator,self.is_augment) for js in self.js]
-
-    def get_ne_dict(self):
-        csv_path = '/mnt/hwfile/medai/zhangxiaoman/CODE/Pranav/MICIC_IV/ANA/data/process_file/filtered_head_ct_entities.csv'
-        csv_df = pd.read_csv(csv_path)
-        csv_df['Entity'] = csv_df['Entity'].str.lower()
-        csv_df = csv_df[~csv_df['type'].isin(['disorders', 'devices'])]
-        csv_dict = dict(zip(csv_df['Entity'], csv_df['type']))
-        return csv_dict
-
-    def update_from_js(self, js):
-        self.js = js
+        self.augmentator =  None
         self.documents = [Document(js,self.augmentator,self.is_augment) for js in self.js]
 
     def _read(self, json_file, pred_file=None):
