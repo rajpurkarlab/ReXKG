@@ -41,9 +41,11 @@ class Dataset:
         self.js = self._read(json_file, pred_file)
         if doc_range is not None:
             self.js = self.js[doc_range[0]:doc_range[1]]
-        self.is_augment = is_augment
-        self.augmentator =  None
-        self.documents = [Document(js,self.augmentator,self.is_augment) for js in self.js]
+        self.documents = [Document(js) for js in self.js]
+
+    def update_from_js(self, js):
+        self.js = js
+        self.documents = [Document(js) for js in self.js]
 
     def _read(self, json_file, pred_file=None):
         gold_docs = [json.loads(line) for line in open(json_file)]
@@ -71,14 +73,8 @@ class Dataset:
 
 
 class Document:
-    def __init__(self, js, augmentator, is_augment=False):
+    def __init__(self, js):
         self._doc_key = js["doc_key"]
-        ### xm_add_augmentation
-        # print(js)
-        if is_augment:
-            if random.random() < 0.5:
-                js = self.aug_js_sentences(js,augmentator)
-                # print(js)
         entries = fields_to_batches(js, ["doc_key", "clusters", "predicted_clusters", "section_starts"])
         sentence_lengths = [len(entry["sentences"]) for entry in entries]
         sentence_starts = np.cumsum(sentence_lengths)
@@ -95,46 +91,7 @@ class Document:
             self.predicted_clusters = [Cluster(entry, i, self)
                                        for i, entry in enumerate(js["predicted_clusters"])]
 
-    def aug_js_sentences(self,js,augmentator):
-        return_js = {}
-        x = js['sentences'][0]
-        y = ['O']*len(x)
-        for entities in js["ner"][0]:
-            start_idx = entities[0]
-            end_idx = entities[1]
-            if start_idx == end_idx:
-                y[start_idx] = 'S-'+str(entities[2])
-            elif end_idx-start_idx == 1:
-                y[end_idx] = 'E-'+str(entities[2])
-                y[start_idx] = 'B-'+str(entities[2])
-            else:
-                y[end_idx] = 'E-'+str(entities[2])
-                y[start_idx] = 'B-'+str(entities[2])
-                for idx in range(start_idx+1,end_idx):
-                    y[idx] = 'I-'+str(entities[2])
-        x_augs, y_augs = augmentator.augment(x, y, n=1)
-        ner_augs = []
-        for idx in range(len(y_augs[0])):
-            if x_augs[0][idx] == 'left' or x_augs[0][idx] == 'right':
-                x_augs[0][idx] = random.choice(['left', 'right'])
-            else:
-                x_augs[0][idx] = self.random_edit(x_augs[0][idx])
-            if y_augs[0][idx] == 'O':
-                pass 
-            elif y_augs[0][idx][0] == 'S':
-                ner_augs.append([idx,idx,y_augs[0][idx].replace('S-','')])
-            elif y_augs[0][idx][0] == 'B':
-                jdx = idx + 1
-                while jdx < len(y_augs[0]) and y_augs[0][jdx][0] != 'E':
-                    jdx += 1
-                if jdx < len(y_augs[0]) and y_augs[0][jdx][0] == 'E':
-                    ner_augs.append([idx, jdx, y_augs[0][idx].replace('B-', '')])
-        return_js['doc_key'] = js['doc_key']
-        return_js['sentences'] = x_augs
-        return_js['ner'] = [ner_augs]
-        return_js['relations'] =  [[]]
-        return return_js
-    
+
     def random_edit(self,word, insertion_prob=0.05, swap_prob=0.05, deletion_prob=0.05):
         # 将字符串转为列表以便进行编辑
         word_list = list(word)
